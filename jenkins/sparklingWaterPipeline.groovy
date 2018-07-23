@@ -105,6 +105,7 @@ def prepareSparkEnvironment() {
                     ./dev/make-distribution.sh --name custom-spark --pip -Phadoop-${config.hadoopVersion} -Pyarn -Phive
                     cp -r ./dist/ ${env.SPARK_HOME}
                     ./build/mvn install -Phadoop-${config.hadoopVersion} -Pyarn -Phive -DskipTests
+                    find /home/jenkins/.m2/repository
                     """
                 } else {
                     if(config.sparkVersion == "2.3.1"){
