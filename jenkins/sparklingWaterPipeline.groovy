@@ -85,7 +85,7 @@ def getGradleCommand(config) {
     }
 
     if (config.buildAgainstSparkBranch.toBoolean()) {
-        "${gradleStr} -x checkSparkVersionTask -PtestMojoPipeline=true"
+        "${gradleStr} -x checkSparkVersionTask -PtestMojoPipeline=true -PuseMavenLocal=true -PsparkVersion=\$(./gradlew -q :sparkling-water-core:printSparkVersion)"
     } else {
         "${gradleStr} -PtestMojoPipeline=true"
     }
@@ -104,6 +104,7 @@ def prepareSparkEnvironment() {
                     git checkout ${config.sparkBranch}
                     ./dev/make-distribution.sh --name custom-spark --pip -Phadoop-${config.hadoopVersion} -Pyarn -Phive
                     cp -r ./dist/ ${env.SPARK_HOME}
+                    ./build/mvn install -Phadoop-${config.hadoopVersion} -Pyarn -Phive -DskipTests
                     """
                 } else {
                     if(config.sparkVersion == "2.3.1"){

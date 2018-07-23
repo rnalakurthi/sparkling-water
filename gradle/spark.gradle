@@ -96,6 +96,12 @@ void checkSparkVersion() {
     }
 }
 
+task printSparkVersion() {
+    doLast {
+        println( getSystemSparkVersion())
+    }
+}
+
 // Useful task to setup idea test configuration
 task printTestEnv {
     doLast {
