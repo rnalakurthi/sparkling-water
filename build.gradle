@@ -112,6 +112,9 @@ configure(subprojects) { project ->
         // Should be enabled only in development mode
         if (h2oBuild == '99999' || project.hasProperty('useMavenLocal') || h2oBuild.endsWith("-SNAPSHOT")) {
             mavenLocal()
+            maven {
+                url "/home/jenkins/.m2/repository"
+            }
         }
 
         mavenCentral()
