@@ -342,7 +342,7 @@ trait H2OAutoMLParams extends Params {
   def setIgnoredColumns(value: Array[String]): this.type = set(ignoredColumns, value)
 
   /** @group setParam */
-  def setExcludeAlgos(value: Array[AutoML.algo]): this.type = set(excludeAlgos, value)
+  def setExcludeAlgos(value: Array[AutoML.Algo]): this.type = set(excludeAlgos, value)
 
   /** @group setParam */
   def setProjectName(value: String): this.type = set(projectName, value)
@@ -401,15 +401,15 @@ trait H2OAutoMLParams extends Params {
 }
 
 
-class H2OAutoMLAlgosParam private(parent: Params, name: String, doc: String, isValid: Array[AutoML.algo] => Boolean)
-  extends Param[Array[AutoML.algo]](parent, name, doc, isValid) {
+class H2OAutoMLAlgosParam private(parent: Params, name: String, doc: String, isValid: Array[AutoML.Algo] => Boolean)
+  extends Param[Array[AutoML.Algo]](parent, name, doc, isValid) {
 
   def this(parent: Params, name: String, doc: String) = this(parent, name, doc, _ => true)
 
   /** Creates a param pair with a `java.util.List` of values (for Java and Python). */
-  def w(value: java.util.List[AutoML.algo]): ParamPair[Array[AutoML.algo]] = w(value.asScala.toArray)
+  def w(value: java.util.List[AutoML.Algo]): ParamPair[Array[AutoML.Algo]] = w(value.asScala.toArray)
 
-  override def jsonEncode(value: Array[AutoML.algo]): String = {
+  override def jsonEncode(value: Array[AutoML.Algo]): String = {
     val encoded: JValue = if (value == null) {
       JNull
     } else {
@@ -419,19 +419,19 @@ class H2OAutoMLAlgosParam private(parent: Params, name: String, doc: String, isV
   }
 
 
-  override def jsonDecode(json: String): Array[AutoML.algo] = {
+  override def jsonDecode(json: String): Array[AutoML.Algo] = {
     parse(json) match {
       case JArray(values) =>
         values.map {
           case JString(x) =>
-            AutoML.algo.valueOf(x)
+            AutoML.Algo.valueOf(x)
           case _ =>
-            throw new IllegalArgumentException(s"Cannot decode $json to AutoML.algo.")
+            throw new IllegalArgumentException(s"Cannot decode $json to AutoML.Algo.")
         }.toArray
       case JNull =>
         null
       case _ =>
-        throw new IllegalArgumentException(s"Cannot decode $json to Array[AutoML.algo].")
+        throw new IllegalArgumentException(s"Cannot decode $json to Array[AutoML.Algo].")
     }
   }
 }
